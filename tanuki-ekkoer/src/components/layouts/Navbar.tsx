@@ -1,9 +1,11 @@
 import { Dumbbell } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "../UI/Button";
-
+import { useAuth } from "../../context/AuthContext";
+import { UserButton } from "@neondatabase/neon-js/auth/react";
 export default function Navbar() {
-    const user = false;
+    const user = useAuth();
+    /** the use auth hook lets us consume the data provided from our auth provider */
     return (
         <header className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-background)]/80 backdrop-blur-md">
             <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -17,6 +19,7 @@ export default function Navbar() {
                             <Button variant="ghost" size="sm">Profile</Button>
 
                         </Link>
+                        <UserButton className="bg-(--color-accent)" />
                     </> : <>
                         <Link to="/auth/sign-in">
                             <Button variant="ghost" size="sm">Sign In</Button>

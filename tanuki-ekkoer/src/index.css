@@ -1,17 +1,16 @@
 @import "tailwindcss";
-@import '@neondatabase/neon-js/ui/css';
+@import "@neondatabase/neon-js/ui/tailwind";
 
 @theme {
   --font-sans: "Geist", system-ui, sans-serif;
 
-  --color-background: #191516;
+  --color-background: #0a0a0a;
   --color-foreground: #fafafa;
-  --color-muted: #a1a1a1;
+  --color-muted: #a1a1aa;
   --color-border: #27272a;
-  --color-card: #393940;
+  --color-card: #18181b;
   --color-accent: #a3e635;
   --color-accent-hover: #84cc16;
-  --color-primary: #191516;
 }
 
 @layer base {
@@ -21,8 +20,8 @@
     color: var(--color-foreground);
   }
 
+  /* we assign a base structure*/
   body {
-    /*setting a base structure*/
     margin: 0;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
@@ -34,7 +33,4 @@
   .animate-pulse {
     background-color: var(--color-border) !important;
   }
-
 }
-
-;

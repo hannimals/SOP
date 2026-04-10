@@ -1,11 +1,26 @@
 import { type ButtonHTMLAttributes, forwardRef } from "react";
+/**
+* parameters that our button accepts (the defualt button atributes + custom ones like variant and size)
+*
+* @interface ButtonProps
+* @extends {ButtonHTMLAttributes<HTMLButtonElement>}
+*/
 
-/*parameters that our button accepts*/
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: "primary" | "secondary" | "ghost";
     size?: "sm" | "md" | "lg";
 }
-/* Forwardreffunction<Whattypeofelementweareworkingwith, whattypeofpropswearegivingit>((theparameters wetake)*/
+/**
+* This is a reusable button component that we can use throughout our application. It accepts all the standard button props, as well as custom props for variant and size. The variant prop determines the styling of the button (primary, secondary, or ghost), while the size prop determines the padding and font size (small, medium, or large). 
+* 
+* It implements forwardref which allows us to pass a ref to the parent component and acsess the underlying button element. this work because in react we create a component that wraps the native DOM element (in this case, a button), and we want to be able to access that DOM element directly from the parent component. By using forwardRef, we can pass a ref from the parent component down to the button component, and then attach that ref to the underlying button element. This allows us to call methods on the button element (like focus or click) directly from the parent component.
+* 
+* Our button is = Forwardreffunction<Whattypeofelementweareworkingwith, whattypeofpropswearegivingit>((theparameters wetake) => defaultvaluesforourprops)} returns (the JSX of our button) *JSX means the html like syntax of our components that gets tranformed into regular javascript by react*
+* @summary Button component
+* 
+*/
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     /*the default values of the button props */
     const { className = "", variant = "primary", size = "md", children, ...restprops } = props;
@@ -14,7 +29,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 
     const variants = {
         primary:
-            "bg-[var(--color-accent)] text-black hover:bg-[var(--color-accentHover)]",
+            "bg-[var(--color-accent)] text-black hover:bg-[var(--color-accent-hover)]",
         secondary:
             "bg-[var(--color-card)] text-[var(--color-foreground)] border border-[var(--color-border)] hover:bg-[var(--color-border)]",
         ghost:

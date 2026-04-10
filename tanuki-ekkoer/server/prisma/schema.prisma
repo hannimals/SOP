@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model greeting_message {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid //type of the id
+  user_id      String   @db.Uuid //type of the user id
+  message_json Json
+  message_text String
+  version      Int      @default(1)
+  created_at   DateTime @default(now()) @db.Timestamp(6) //type of the created at (accepts date and time)
+
+  @@index([user_id], map: "idx_messages_user_id") //index on user_id for faster queries
+}
+
+// here we do the table for our profile data
+model user_profiles {
+  user_id      String   @id @db.Uuid //type of the id
+  voice        String   @db.VarChar(20) //type of the voice (accepts numbers and text)
+  message_tone String   @db.VarChar(20) //type of the message tone (accepts numbers and text)
+  user_choice  String   @db.VarChar(20) //type of the user choice (accepts true or false)
+  user_name    String   @db.VarChar(255) //type of the user name (accepts text)
+  updated_at   DateTime @default(now()) @db.Timestamp(6) //type of the updated at (accepts date and time)
+}

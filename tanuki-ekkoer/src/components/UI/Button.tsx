@@ -31,7 +31,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         primary:
             "bg-[var(--color-accent)] text-black hover:bg-[var(--color-accent-hover)]",
         secondary:
-            "bg-[var(--color-card)] text-[var(--color-foreground)] border border-[var(--color-border)] hover:bg-[var(--color-border)]",
+            "bg-[var(--color-card)] text-[var(--color-foreground)] border border-[var(--color-border)] hover:bg-[var(--color-accent)] hover:text-white",
         ghost:
             "text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-card)]",
     };

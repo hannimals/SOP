@@ -3,7 +3,12 @@ import { createContext, useEffect, useState, useCallback, useContext, useRef, ty
 import { authClient } from "../lib/auth";
 import type { UserProfile } from "../types";
 import { api } from "../lib/api";
-
+/**
+* We define what type our create context is. We use the | operator to specify that our AuthContext can be either of type AuthContextType (an interface) or type null. Moreover we give the createfunction its default parameter wich is null.
+* To get the information of wether the user is signed in or not, we define the user as a prop, that way we can check if the user type is present or if its not (null).
+*  
+* @interface AuthContextType
+*/
 interface AuthContextType {
     user: User | null;
     isLoading: boolean;
@@ -13,18 +18,19 @@ interface AuthContextType {
     ) => Promise<void>; //returns a promise that resolves to void, meaning it doesn't return any value when the promise is fulfilled. The function is expected to perform some asynchronous operation (like saving the profile data to a database) and once that operation is complete, it will resolve without returning any specific data.
 
 }
-/**
-* We define what type our create context is. We use the | operator to specify that our AuthContext can be either of type AuthContextType (an interface) or type null. Moreover we give the createfunction its default parameter wich is null.
-* To get the information of wether the user is signed in or not, we define the user as a prop, that way we can check if the user type is present or if its not (null).
-*  
-* @interface AuthContextType
-*/
+
 
 const AuthContext = createContext<AuthContextType | null>(null);
-
+/** 
+* We define a new component: The Auth provider. This function will provide the data in our AuthContext. Its going to take in one propt (children) and anything bellow it, in this case the entire app, that way we are making the context available within the entire component tree. It returns a AuthContext.provider that renders the children. Then we create a state called neonUser using useState hook function, this will allow us to get the data we collect from neon and convert them to our user type we defined in the User interface.
+* @param {ReactNode} children - Its basically our entire app, that we wrap in the context
+* @param {any} useState - its the state we create for our neon user
+* @return {AuthContextType.Provider} 
+*/
 export default function AuthProvider({ children }: { children: ReactNode }) {
     const [neonUser, setNeonUser] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         async function loadUser() {
             try {
@@ -59,13 +65,12 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         {children}
     </AuthContext.Provider>);
 }
-/** 
-* We define a new component: The Auth provider. This function will provide the data in our AuthContext. Its going to take in one propt (children) and anything bellow it, in this case the entire app, that way we are making the context available within the entire component tree. It returns a AuthContext.provider that renders the children. Then we create a state called neonUser using useState hook function, this will allow us to get the data we collect from neon and convert them to our user type we defined in the User interface.
-* @param {ReactNode} children - Its basically our entire app, that we wrap in the context
-* @param {any} useState - its the state we create for our neon user
-* @return {AuthContextType.Provider} 
-*/
 
+/** 
+* This is a hook we create to fetch the data provided by our auth provided
+* @param {AuthContextType|null} context - Brief description of the parameter here. Note: For other notations of data types, please refer to JSDocs: DataTypes command.
+* @return {AuthContextType|null} returns the data in the form of a context (user)
+*/
 export function useAuth() {
     const context = useContext(AuthContext);
     if (!context) {
@@ -73,8 +78,4 @@ export function useAuth() {
     }
     return context;
 }
-/** 
-* This is a hook we create to fetch the data provided by our auth provided
-* @param {AuthContextType|null} context - Brief description of the parameter here. Note: For other notations of data types, please refer to JSDocs: DataTypes command.
-* @return {AuthContextType|null} returns the data in the form of a context (user)
-*/
+

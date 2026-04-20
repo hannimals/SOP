@@ -8,7 +8,7 @@ export default function Profile() {
 
     }
     else if (plan) {
-        return <Navigate to="/onboarding" /> /**@hannimals this will be changed so the user will be navigated to the card generator */
+        return <Navigate to="/onboarding" />
     }
     else {
         return <div>

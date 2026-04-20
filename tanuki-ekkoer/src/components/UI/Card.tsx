@@ -32,7 +32,7 @@ export const Card = forwardRef<HTMLDivElement, Cardprops>(
             lg: "max-w-[150] max-h-[450]",
         };
         return (<div ref={ref}
-            className={`rounded-2xl p-6 ${variants[variant]} ${sizes[size]} ${className} `}
+            className={`rounded-2xl p-6 text-[var(--color-foreground)] ${variants[variant]} ${sizes[size]} ${className} `}
             {...restprops}>
             {children}
 

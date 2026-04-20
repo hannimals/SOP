@@ -7,22 +7,18 @@ import { TextArea } from "../components/UI/TextArea";
 import { Button } from "../components/UI/Button";
 import { ArrowRight, Loader2 } from "lucide-react";
 import type { UserProfile } from "../types";
-
-const voiceOptions = [
-    { value: "mickey", label: "mikey image" },
-    { value: "sonic", label: "sonic image" },
-    { value: "twilight", label: "twilight image" }
-]
+import { useNavigate } from "react-router-dom";
+import CharacterSelector from "../components/UI/characterRow";
 
 const messageTone = [
-    { value: "fun", label: "a cheerfull message, to joke arround" },
-    { value: "friendly", label: "a friendly encouraging message to the best of friends!" },
-    { value: "cool", label: "a cool message from a cool character" }
+    { value: "fun", label: "En muntert hilsen, for sjov" },
+    { value: "friendly", label: "En venlig og opmuntrende hilsen til de bedste venner!" },
+    { value: "cool", label: "En sej besked fra en sej karakter" }
 ]
 
 const userChoiceOfWriter = [
-    { value: "user", label: "I want to alter my message" },
-    { value: "AI", label: "I want to keep the message provided by the AI" },
+    { value: "user", label: "Jeg vil ændre min besked" },
+    { value: "AI", label: "Jeg vil gerne beholde den besked, som AI'en har givet" },
 ]
 
 
@@ -37,7 +33,7 @@ export default function Onboarding() {
     //we create the states we need for the form, the form data is an object that contains all the information we need to save the profile, we initialize it with default values. We also have a state for the loading state of the generation process and a state for any error that might occur during the profile saving process.
     const [isGenerating, setIsGenerating] = useState(false);//true for testing
     const [error, setError] = useState("");
-
+    const navigate = useNavigate();
     function updateFormData(field: string, value: string) { /**formdata becomes an object where the prev is the previous that remains the same and onlt the field we pass is changed */
         setFormData((prev) => ({
             ...prev,
@@ -45,9 +41,9 @@ export default function Onboarding() {
         }))
     }
 
-    async function handleUserForm(e: React.FormEvent<HTMLFormElement>) {
+    async function handleUserForm(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault(); /**prevents the default behavior of the form submission, which is to reload the page. This allows us to handle the form submission with our custom logic without causing a page refresh. */
-        
+
         // Validate form data
         if (!formData.name.trim()) {
             alert("Please enter a name");
@@ -70,11 +66,12 @@ export default function Onboarding() {
             name: formData.name,
             voice: formData.voice as UserProfile['voice'], /**we are using type assertion here to tell typescript that the value of formData.voice will be one of the values defined in the UserProfile interface for the voice property. This is necessary because formData.voice is a string, but we want to ensure that it matches the specific string literals defined in the UserProfile interface. */
             messageTone: formData.messageTone as UserProfile['messageTone'],
-            userChoiceOfWriter: formData.userChoiceOfWriter === "user" ? true : false // convert string to boolean
+            userChoiceOfWriter: formData.userChoiceOfWriter as UserProfile['userChoiceOfWriter']
         };
 
         try {
             await saveProfile(profile);
+            navigate("/message-editor")
             setIsGenerating(true);
             alert("Profile saved successfully!");
         } catch (e) {
@@ -93,60 +90,59 @@ export default function Onboarding() {
     }
     return (
         <SignedIn>
-            <div className="min-h-screen pt-24 pb-12 px-6">
+            <div className="min-h-screen pt-24 pb-12 px-6 bg-[var(--color-background)]">
                 <div className="max-w-xl mx-auto">
                     {/*/step 1: input from user*/}
 
                     {!isGenerating ? (
                         <Card variant="bordered">
-                        <h1 className="text-2xl font-bold mb-2">Welcome to Tanuki Ekkoer!</h1>
-                        <p >Create your first birthday greeting with top level AI technology.</p>
-                        <form onSubmit={handleUserForm} className="space-y-7 mt-12 ">
-                            <TextArea id="name"
-                                label="Whats the name of the birthay person?"
-                                placeholder="Write your name or nickname here"
-                                rows={2}
-                                value={formData.name}
-                                onChange={(e) => updateFormData('name', e.target.value)} />
+                            <h1 className="text-2xl font-bold mb-2">Velkom til Tanuki Ekkoer!</h1>
+                            <p >Lav din første fødselsdagshilsen med avanceret AI-teknologi.</p>
+                            <form onSubmit={handleUserForm} className="space-y-7 mt-12 ">
+                                <TextArea id="name"
+                                    label="Hvad hedder fødselsdagsbarnet?"
+                                    placeholder="Skriv dit navn eller kælenavn her"
+                                    rows={2}
+                                    value={formData.name}
+                                    onChange={(e) => updateFormData('name', e.target.value)}
+                                />
 
+                                <CharacterSelector
+                                    value={formData.voice}
+                                    onChange={(selectedVoice) => updateFormData('voice', selectedVoice)}
+                                />
+                                <Select id="messageTone"
+                                    label="Hvilken tone ønsker du, at din besked skal have?"
+                                    options={messageTone}
+                                    value={formData.messageTone}
+                                    onChange={(e) => updateFormData('messageTone', e.target.value)} />
 
-                            <Select id="voice"
-                                label="Choose your favourite character!"
-                                options={voiceOptions}
-                                value={formData.voice} /** (e)=> is an event handler, it basically conects the user interaction (change in selection) to function (formdata with the specific parameters) */
-                                onChange={(e) => updateFormData('voice', e.target.value)} />
+                                <Select id="userChoiceOfWriter"
+                                    label="Vil du redigere den besked, som AI'en har genereret, eller beholde den, som den er?"
+                                    options={userChoiceOfWriter}
+                                    value={formData.userChoiceOfWriter}
+                                    onChange={(e) => updateFormData('userChoiceOfWriter', e.target.value)} />
 
-                            <Select id="messageTone"
-                                label="Which tone would you like your message to have?"
-                                options={messageTone}
-                                value={formData.messageTone}
-                                onChange={(e) => updateFormData('messageTone', e.target.value)} />
+                                <div className="flex gap-3 pt-2">
+                                    <Button type="submit" className="flex-1 gap-2" >
 
-                            <Select id="userChoiceOfWriter"
-                                label="Would you like to edit the message provided by the AI or keep it as is?"
-                                options={userChoiceOfWriter}
-                                value={formData.userChoiceOfWriter}
-                                onChange={(e) => updateFormData('userChoiceOfWriter', e.target.value)} />
+                                        Generer min fødselsdagshilsen <ArrowRight className="w-4 h-4" />
+                                    </Button>
 
-                            <div className="flex gap-3 pt-2">
-                                <Button type="submit" className="flex-1 gap-2">
-                                    Generate my birthday greeting <ArrowRight className="w-4 h-4" />
-                                </Button>
-
-                            </div>
-                        </form>
-                    </Card>
+                                </div>
+                            </form>
+                        </Card>
                     ) : (
-                        <Card variant ="bordered" className="text-center py-16 flex flex-col items-center gap-4">
-                            <Loader2 className= "w-12 h-12 text-[var(--color-accent)] mx-auto mb-6 animate-spin" /> 
-                            <h1 className="text-2xl font-bold mb-2">We are creating your message</h1> 
+                        <Card variant="bordered" className="text-center py-16 flex flex-col items-center gap-4">
+                            <Loader2 className="w-12 h-12 text-[var(--color-accent)] mx-auto mb-6 animate-spin" />
+                            <h1 className="text-2xl font-bold mb-2">We are creating your message</h1>
                             <p className="text-[var(--color-muted)]"> This might take a few seconds, we are using powerful AI to create the best message for your birthday greeting!</p>
-                             </Card>
+                        </Card>
 
 
                     )}
-                    
-                {/*step 2: AI generation card as an output*/}
+
+                    {/*step 2: AI generation card as an output*/}
 
 
 

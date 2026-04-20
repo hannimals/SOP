@@ -2,6 +2,47 @@ import { Router, type Request, type Response } from "express";
 import { prisma } from "../lib/prisma";
 export const profileRouter = Router();
 
+// GET route to fetch user profile
+profileRouter.get("/:userId", async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.userId as string;
+
+        if (!userId) {
+            return res.status(400).json({ error: "User ID is required." });
+        }
+
+        // Validate UUID format
+        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+        if (!uuidRegex.test(userId)) {
+            return res.status(400).json({ error: "Invalid user ID format." });
+        }
+
+        const profile = await prisma.user_profiles.findUnique({
+            where: { user_id: userId },
+        });
+
+        if (!profile) {
+            return res.status(404).json({ error: "Profile not found." });
+        }
+
+        res.json({
+            user_id: profile.user_id,
+            voice: profile.voice,
+            messageTone: profile.message_tone,
+            userChoice: profile.user_choice,
+            user_name: profile.user_name,
+            updated_at: profile.updated_at
+        });
+
+    } catch (error) {
+        console.error("Error fetching profile:", error);
+        res.status(500).json({ error: "An error occurred while fetching the profile." });
+    }
+});
+
+//handles creation and updating of user profiles (stores users choice of b-day message). 
+//POST is a http method that we use to send data to the server. uses prisma upsert method to create or update a profile based on userId. 
+
 profileRouter.post("/", async (req: Request, res: Response) => {
     try {
         console.log("Received profile request:", req.body);
@@ -9,7 +50,7 @@ profileRouter.post("/", async (req: Request, res: Response) => {
         if (!userId) {
             return res.status(400).json({ error: "User ID is required." });
         }
-        
+
         // Validate UUID format
         const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
         if (!uuidRegex.test(userId)) {

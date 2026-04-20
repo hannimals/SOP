@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { profileRouter } from './routes/profile';
+import { greetingRouter } from './routes/greeting';
 
 dotenv.config();
 const app = express();
@@ -18,13 +19,13 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 })); /**this whitelists our backend to be utilized in our client */
-app.use(cookieParser()); /** this allows us */
+app.use(cookieParser()); /** this allows us ....*/
 
 app.use((req, res, next) => {
-    console.log(`${req.method} ${req.path}`, { 
-        body: req.body, 
+    console.log(`${req.method} ${req.path}`, {
+        body: req.body,
         headers: req.headers,
-        origin: req.headers.origin 
+        origin: req.headers.origin
     });
     next();
 });
@@ -33,6 +34,7 @@ app.use(express.json()); /** middleware that allows us to read json for every re
 
 //API routes
 app.use("/api/profile", profileRouter);
+app.use("/api/greetings", greetingRouter);
 
 app.listen(3001, () => {
     console.log(`Server is running on port 3001`);

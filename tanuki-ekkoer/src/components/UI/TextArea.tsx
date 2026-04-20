@@ -29,7 +29,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({ classN
             <textarea
                 ref={ref}
                 id={id}
-                className={`w-full px-4 py-2.5 bg-[var(--color-card)] border border-[var(--color-border)]`}
+                className={`w-full rounded-xl px-4 py-2.5 bg-[var(--color-card)] border border-[var(--color-border)] text-[var(--color-foreground)] placeholder:text-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent`}
                 {...props} />
             {error && <span className="text-sm text-red-500">{error}</span>}
         </div>

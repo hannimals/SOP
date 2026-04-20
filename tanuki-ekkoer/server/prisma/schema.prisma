@@ -25,10 +25,11 @@ model greeting_message {
 
 // here we do the table for our profile data
 model user_profiles {
-  user_id      String   @id @db.Uuid //type of the id
-  voice        String   @db.VarChar(20) //type of the voice (accepts numbers and text)
-  message_tone String   @db.VarChar(20) //type of the message tone (accepts numbers and text)
-  user_choice  String   @db.VarChar(20) //type of the user choice (accepts true or false)
-  user_name    String   @db.VarChar(255) //type of the user name (accepts text)
-  updated_at   DateTime @default(now()) @db.Timestamp(6) //type of the updated at (accepts date and time)
+  user_id       String   @id @db.Uuid //type of the id
+  voice         String   @db.VarChar(20) //type of the voice (accepts numbers and text)
+  message_tone  String   @db.VarChar(20) //type of the message tone (accepts numbers and text)
+  user_choice   String   @db.VarChar(20) //type of the user choice (accepts true or false)
+  user_name     String   @db.VarChar(255) //type of the user name (accepts text)
+  updated_at    DateTime @default(now()) @db.Timestamp(6) //type of the updated at (accepts date and time)
+  clonedVoiceId String?  @db.VarChar(100) //in the future we will have the cloned voice id's stored in our database, but for now we hardcode them
 }

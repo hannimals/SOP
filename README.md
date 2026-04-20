@@ -20,7 +20,7 @@ The projects in this repository:
   * Code that does not meet production standards
   * Content subject to external licenses or restrictions
 
-Some projects may rely on third-party assets, APIs, or ideas that **do not अनुमति redistribution or commercial use**.
+Some projects may rely on third-party assets, APIs, or ideas that **do not support redistribution or commercial use**.
 
 ---
 

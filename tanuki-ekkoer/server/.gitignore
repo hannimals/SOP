@@ -5,5 +5,6 @@ node_modules
 
 /src/lib/tts
 .tts
+tts.ts
 
 /generated/prisma

@@ -13,8 +13,8 @@ const client = new ElevenLabsClient({
     apiKey
 });
 
-// Map our friendly voice names to ElevenLabs voice IDs
-const voiceMapping: Record<string, string> = {
+// Map our charakter voice names to ElevenLabs voice IDs
+const voiceMapping: Record<string, string> = { // this is changed to restricted in git
     "mickey": "geWyk9bUdl4apQahOCEB", // Mickey Mouse voice ID english
     "sonic": "PQQuibD9fnmhUGmpSmiH",  // Sonic voice ID  dansk
     "twilight": "xXxTMerSkdFDBEgP7NQL"  // Twilight Sparkle voice ID dansk

@@ -1,62 +1,63 @@
-# ⚠️ Private Project Repository
+# App Development Exam Project
 
-## 📌 Purpose
+## 📌 Overview
 
-This repository contains a collection of projects developed strictly for **educational and learning purposes**.
-They are used to explore concepts, experiment with technologies, and improve development skills.
+This repository contains a project developed as part of an academic exam focused on **app development**, with an emphasis on:
 
----
+* **Design Thinking methodology**
+* **Text-to-Speech (TTS) implementation**
+* User-centered problem solving and prototyping
 
-## 🚫 Usage Restrictions
-
-The projects in this repository:
-
-* **Are not intended for production use**
-* **Must not be deployed, distributed, or commercialized**
-* May include:
-
-  * Experimental implementations
-  * Incomplete features
-  * Code that does not meet production standards
-  * Content subject to external licenses or restrictions
-
-Some projects may rely on third-party assets, APIs, or ideas that **do not support redistribution or commercial use**.
+The goal of this project is to demonstrate the development process from ideation to implementation, rather than deliver a fully production-ready application.
 
 ---
 
-## ⚖️ Legal Notice
+## ⚠️ Project Status
 
-Due to potential licensing, intellectual property, or security considerations:
+> 🚧 This project is **not complete**
 
-> ❗ These projects are provided *as-is* and are **not authorized for public deployment or commercial usage**.
-
-Any attempt to reuse, deploy, or redistribute this code is done **at your own risk** and responsibility.
+Some components, files, and configurations have been intentionally removed.
 
 ---
 
-## 🎯 Intent
+## 🚫 Limitations & Restrictions
 
-The goal of this repository is to:
+Certain files originally included in this project have been excluded from this public version due to:
 
-* Learn by building
-* Experiment with new technologies
-* Prototype ideas quickly
-* Improve problem-solving and development skills
+* ⚖️ **Legal and licensing considerations**
+* 🔐 **Security concerns (e.g., API keys, sensitive configurations)**
+* 📦 Dependencies or assets not permitted for redistribution
 
----
+As a result:
 
-## 🧠 Note
-
-If you're here reviewing the code:
-
-* Expect rough edges — this is a learning space
-* Not all solutions reflect best practices
-* Progress matters more than perfection
+* The application may not run out-of-the-box
+* Some features (especially related to TTS or external services) may be partially implemented or non-functional
+* Setup may require additional configuration by the user
 
 ---
 
-## 📬 Contact
+## Key Features (Conceptual)
 
-If you have questions about specific projects or learning approaches, feel free to reach out.
+* Implementation of **Design Thinking phases**:
+
+  * Empathize
+  * Define
+  * Ideate
+  * Prototype
+  * Test
+
+* Integration of **Text-to-Speech (TTS)** for enhanced user interaction
+
+* Focus on **user experience and accessibility**
+
+---
+
+> 🔍 This is a **learning and examination project**, not a finalized product.
+
+---
+
+## Contact
+
+If you have questions about the implementation or methodology, feel free to reach out.
 
 ---

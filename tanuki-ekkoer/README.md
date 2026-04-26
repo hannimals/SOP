@@ -98,4 +98,5 @@ export async function generateAudio(message: string, voiceId: string): Promise<s
 
 ````
 ## User Flow Chart:
+for at visualisere kodens kompleksitet og brugeroplevelsen har jeg anvendt en bruger-flow-diagram
 <img width="3687" height="2482" alt="tanuki-userFlow" src="https://github.com/user-attachments/assets/133f7e24-f85b-4f29-a15d-5d6f725f05ae" />
